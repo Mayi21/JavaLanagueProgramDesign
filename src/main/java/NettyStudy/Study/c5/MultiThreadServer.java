@@ -12,6 +12,7 @@ import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * @Author xaohii
@@ -31,7 +32,14 @@ public class MultiThreadServer {
 		serverSocketChannel.register(boss, SelectionKey.OP_ACCEPT);
 		// ssc绑定
 		serverSocketChannel.bind(new InetSocketAddress(1234));
-		Worker worker = new Worker("worker-0");
+		// 创建固定数量的worker数量
+		// 但在容器下，拿到的是物理机器的CPU数量，而不是分配给容器的
+		// 在JDK10的时候，才支持
+		Worker[] workers = new Worker[2];
+		for (int i=0;i<workers.length;i++){
+			workers[i] = new Worker("worker-"+i);
+		}
+		AtomicInteger index = new AtomicInteger();
 		while (true){
 			boss.select();
 			Iterator<SelectionKey> iterator = boss.selectedKeys().iterator();
@@ -42,7 +50,8 @@ public class MultiThreadServer {
 					ServerSocketChannel ssc = (ServerSocketChannel) key.channel();
 					SocketChannel socketChannel = ssc.accept();
 					socketChannel.configureBlocking(false);
-					worker.register(socketChannel);
+					// 轮询算法
+					workers[index.getAndIncrement() % workers.length].register(socketChannel);
 				}
 			}
 		}
@@ -60,6 +69,7 @@ public class MultiThreadServer {
 		public void register(SocketChannel socketChannel) throws Exception{
 			if (!start){
 				thread = new Thread(this, this.name);
+				log.debug("thread name is "+ this.name);
 				selector = Selector.open();
 				thread.start();
 				start = true;
