@@ -1,0 +1,1 @@
+select id, avg(score) as s from score group by id where s>60;
