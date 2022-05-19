@@ -1,4 +1,4 @@
-package NettyStudy.Study.c4.MyChat;
+package NettyStudy.nio.c4.MyChat;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,7 +10,6 @@ import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
 import java.util.Iterator;
 import java.util.Scanner;
-import java.util.TreeSet;
 
 /**
  * @Author xaohii

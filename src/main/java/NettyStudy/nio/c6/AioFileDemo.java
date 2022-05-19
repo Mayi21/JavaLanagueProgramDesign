@@ -1,13 +1,11 @@
-package NettyStudy.Study.c6;
+package NettyStudy.nio.c6;
 
 import lombok.extern.slf4j.Slf4j;
 
 import java.nio.ByteBuffer;
-import java.nio.channels.AsynchronousChannel;
 import java.nio.channels.AsynchronousFileChannel;
 import java.nio.channels.CompletionHandler;
 import java.nio.charset.Charset;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 
@@ -19,7 +17,7 @@ import java.nio.file.StandardOpenOption;
 public class AioFileDemo {
 	public static void main(String[] args) throws Exception {
 
-		try (AsynchronousFileChannel channel = AsynchronousFileChannel.open(Paths.get("src/main/java/NettyStudy/Study/data1.txt"), StandardOpenOption.READ)) {
+		try (AsynchronousFileChannel channel = AsynchronousFileChannel.open(Paths.get("src/main/java/NettyStudy/Study/c3/data.txt"), StandardOpenOption.READ)) {
 			ByteBuffer byteBuffer = ByteBuffer.allocate(16);
 			log.debug("read begin...");
 			channel.read(byteBuffer, 0, null, new CompletionHandler<Integer, ByteBuffer>() {

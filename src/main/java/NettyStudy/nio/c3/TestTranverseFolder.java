@@ -1,4 +1,4 @@
-package NettyStudy.Study.c3;
+package NettyStudy.nio.c3;
 
 import java.io.IOException;
 import java.nio.file.*;

@@ -1,10 +1,8 @@
-package NettyStudy.Study.c4;
+package NettyStudy.nio.c4;
 
-import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
-import java.util.Timer;
 
 /**
  * @Author xaohii

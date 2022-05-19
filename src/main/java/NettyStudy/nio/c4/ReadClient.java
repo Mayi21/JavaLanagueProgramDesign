@@ -1,7 +1,6 @@
-package NettyStudy.Study.c4;
+package NettyStudy.nio.c4;
 
 import java.net.InetSocketAddress;
-import java.net.ServerSocket;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
 import java.nio.charset.Charset;
